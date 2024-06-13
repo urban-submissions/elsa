@@ -1,0 +1,56 @@
+ilabel,label
+0,alone
+1,at petrol/gas station
+2,biking
+3,construction workers
+4,couple/2people
+5,dining
+6,gsv car interaction
+7,group
+8,hugging
+9,load/unload packages from car/truck
+10,on wheelchair
+11,pet interactions
+12,phone interaction
+13,picnic
+14,playing
+15,police
+16,pushing stroller or shopping cart
+17,pushing wheelchair
+18,pushing shopping cart
+19,reading
+20,running
+21,shopping
+22,sitting
+23,skating
+24,snacking
+25,sport activities
+26,standing
+27,street vendors
+28,taking cab/taxi
+29,taking photo
+30,talking
+31,talking on phone
+32,waiting for food/drinks
+33,waiting in bus station
+34,walking
+35,with bike
+36,with coffee or drinks
+37,with luggage
+38,baby/infant
+39,crossing crosswalk
+40,duplicate
+41,elderly
+42,kid
+43,mobility aids
+44,model_hint
+45,multi-label
+46,no people
+47,not sure/confusing
+48,pet
+49,public service/cleaning
+50,riding carriage
+51,teenager
+52,working/laptop
+53,no interaction
+54,pushing wheelchair or stroller

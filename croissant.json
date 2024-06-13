@@ -1,0 +1,946 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "ELSA",
+  "description": "Existing Open Vocabulary Detection (OVD) models exhibit a number of challenges. They often struggle with semantic consistency across diverse inputs, and are often sensitive to slight variations in input phrasing, leading to inconsistent performance. The calibration of their predictive confidence, especially in complex multi-label scenarios, remains suboptimal, frequently resulting in overconfident predictions that do not accurately reflect their context understanding. Understanding of those limitations requires multi-label detection benchmarks. Among those, one challenging domain is social activity interaction. Due to the lack of multi-label benchmarks for social interactions, in this work we present ELSA: Evaluating Localization of Social Activities. ELSA draws on theoretical frameworks in urban sociology and design and uses in-the-wild street-level imagery, where the size of social groups and the types of activities can vary significantly. ELSA includes more than 900 manually annotated images with more than 4,000 multi-labeled bounding boxes for individual and group activities. We introduce a novel re-ranking method for predictive confidence and new evaluation techniques for OVD models. We report our results on the widely-used, SOTA model Grounding DINO. Our evaluation protocol considers semantic stability and localization accuracy and sheds more light on the limitations of the existing approaches.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "citeAs": "@article{hosseini2024elsa,\n  title={ELSA: Evaluating Localization of Social Activities in Urban Streets},\n  author={Hosseini, Maryam and Cipriano, Marco and Eslami, Sedigheh and Hodczak, Daniel and Liu, Liu and Sevtsuk, Andres and de Melo, Gerard},\n  journal={arXiv preprint arXiv:2406.01551},\n  year={2024}\n}",
+  "creator": [
+    "Maryam Hosseini",
+    "Marco Cipriano",
+    "Daniel Hodczak",
+    "Sedigheh Eslami",
+    "Liu Liu",
+    "Andres Sevtsuk",
+    "Gerard de Melo"
+  ],
+  "license": "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+  "url": "https://github.com/urban-submissions/elsa",
+  "version": "1.0",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "filtered_labels",
+      "name": "label_per_box_sanity_checked_removed_unwanted_labels_unified_labels_after_distr_thresholding",
+      "description": "main bounding box files after thresholding",
+      "contentUrl": "gt_data/merged/label_per_box_sanity_checked_removed_unwanted_labels_unified_labels_after_distr_thresholding.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "2e8d6c466ba78fa838bac48c6a62a9d23295f235"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "unfilter_labels",
+      "name": "label_per_box_sanity_checked_removed_unwanted_labels_unified_labels",
+      "description": "main bounding box files before thresholding",
+      "contentUrl": "gt_data/merged/label_per_box_sanity_checked_removed_unwanted_labels_unified_labels.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "8506a1e08272da4bfeaa4d03d19a942632e63a88"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "id_to_labels",
+      "name": "label_id_dict_after_distr_thresholding.csv",
+      "description": "mapping between unique labels and their ids",
+      "contentUrl": "gt_data/triple_inspected_May23rd/merged/label_id_dict_after_distr_thresholding.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "3e6cedaaeb2ae9a2b21d5860cb24295e6d55f456"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "google_images",
+      "name": "google_images.csv",
+      "description": "mapping between image and unique file id for google images",
+      "contentUrl": "google/images.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "3153292a4305e9f59b3510dfe08663ed05668f5e"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "bing_images",
+      "name": "bing_images.csv",
+      "description": "mapping between image and unique file id for bing images",
+      "contentUrl": "bing/images.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "9de144ec5afeb75aea5b48ecc29e6b1a3bcb2126"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "paronamic_bing",
+      "name": "matched_rows.csv",
+      "description": "metadata to fetch the bing imagery",
+      "contentUrl": "dataset/bing/matched_rows.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "431687e738e0641be3999fc34f79c432f4ae9fc3"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "paronamic_google",
+      "name": "matched_rows.csv",
+      "description": "metadata to fetch the google imagery",
+      "contentUrl": "dataset/google/matched_rows.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "158fe69771868b4c487c63f286d2c3acbfd9e607"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "images_with_bounding_box_filtered_records",
+      "name": "Bounding Box Annotations",
+      "description": "All the label information without thresholding",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/ifile",
+          "name": "ifile",
+          "description": "Unique identifier for a file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/x",
+          "name": "x",
+          "description": "X coordinate of a bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "x"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/y",
+          "name": "y",
+          "description": "Y coordinate of a bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "y"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/width",
+          "name": "width",
+          "description": "Width of the bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "width"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/height",
+          "name": "height",
+          "description": "Height of the bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "height"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/ilabel",
+          "name": "ilabel",
+          "description": "Unique identifier of labels",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "ilabel"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/is_valid",
+          "name": "is_valid",
+          "description": "Boolean indicating if that combination of labels is valid",
+          "dataType": "sc:Boolean",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "is_valid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/is_challenging",
+          "name": "is_challenging",
+          "description": "Boolean indicating if that prediction was considered hard",
+          "dataType": "sc:Boolean",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "is_challenging"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/data_source",
+          "name": "data_source",
+          "description": "Source of the data (Bing or Google folder)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "data_source"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/unique_ifile",
+          "name": "unique_ifile",
+          "description": "Bing or Google identifier followed by the ifile",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "unique_ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_filtered_records/num_labels",
+          "name": "num_labels",
+          "description": "Number of labels for that bounding box",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "filtered_labels"
+            },
+            "extract": {
+              "column": "num_labels"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "images_with_bounding_box_unfiltered_records",
+      "name": "Bounding Box Annotations before Thresholding",
+      "description": "Bounding Box Annotations before Thresholding",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/ifile",
+          "name": "ifile",
+          "description": "Unique identifier for a file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/x",
+          "name": "x",
+          "description": "X coordinate of a bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "x"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/y",
+          "name": "y",
+          "description": "Y coordinate of a bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "y"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/width",
+          "name": "width",
+          "description": "Width of the bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "width"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/height",
+          "name": "height",
+          "description": "Height of the bounding box",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "height"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/ilabel",
+          "name": "ilabel",
+          "description": "Unique identifier of labels",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "ilabel"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/is_valid",
+          "name": "is_valid",
+          "description": "Boolean indicating if that combination of labels is valid",
+          "dataType": "sc:Boolean",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "is_valid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/is_challenging",
+          "name": "is_challenging",
+          "description": "Boolean indicating if that prediction was considered hard",
+          "dataType": "sc:Boolean",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "is_challenging"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/data_source",
+          "name": "data_source",
+          "description": "Source of the data (Bing or Google folder)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "data_source"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/unique_ifile",
+          "name": "unique_ifile",
+          "description": "Bing or Google identifier followed by the ifile",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "unique_ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_with_bounding_box_unfiltered_records/num_labels",
+          "name": "num_labels",
+          "description": "Number of labels for that bounding box",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "unfilter_labels"
+            },
+            "extract": {
+              "column": "num_labels"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "google_images_records",
+      "name": "Google Images",
+      "description": "Mapping between image and ifile for Google",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "google_images_records/ifile",
+          "name": "ifile",
+          "description": "Unique file id",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "google_images"
+            },
+            "extract": {
+              "column": "ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_images_records/width",
+          "name": "width",
+          "description": "Width of the original file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "google_images"
+            },
+            "extract": {
+              "column": "width"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_images_records/height",
+          "name": "height",
+          "description": "Height of the original file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "google_images"
+            },
+            "extract": {
+              "column": "height"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_images_records/file",
+          "name": "file",
+          "description": "Filename",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "google_images"
+            },
+            "extract": {
+              "column": "file"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "bing_images_records",
+      "name": "Bing Images",
+      "description": "Mapping between image and ifile for Bing",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "bing_images_records/ifile",
+          "name": "ifile",
+          "description": "Unique file id",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "bing_images"
+            },
+            "extract": {
+              "column": "ifile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_images_records/width",
+          "name": "width",
+          "description": "Width of the original file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "bing_images"
+            },
+            "extract": {
+              "column": "width"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_images_records/height",
+          "name": "height",
+          "description": "Height of the original file",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "bing_images"
+            },
+            "extract": {
+              "column": "height"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_images_records/file",
+          "name": "file",
+          "description": "Filename",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "bing_images"
+            },
+            "extract": {
+              "column": "file"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "bing_download_records",
+      "name": "Bing metadata Download",
+      "description": "Information to download bing images",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/id",
+          "name": "id",
+          "description": "id of the panoramic view",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/bubbleId",
+          "name": "bubbleId",
+          "description": "bubble id from bing in quaternary",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "bubbleId"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/lon",
+          "name": "lon",
+          "description": "longitude",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "lon"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/lat",
+          "name": "lat",
+          "description": "latitude",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "lat"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/timestamp",
+          "name": "timestamp",
+          "description": "timestamp of the panoramic view",
+          "dataType": "sc:Date",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "timestamp"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/cd",
+          "name": "cd",
+          "dataType": "sc:Date",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "cd"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/altitude",
+          "name": "altitude",
+          "description": "altitude",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "altitude"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/heading",
+          "name": "heading",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "heading"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/extract",
+          "name": "extract",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "extract"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "bing_download_records/filename",
+          "name": "filename",
+          "description": "filename of the image",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_bing"
+            },
+            "extract": {
+              "column": "filename"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "google_download_records",
+      "name": "Google metadata Download",
+      "description": "Information to download google images",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/panoid",
+          "name": "panoid",
+          "description": "panoid",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "panoid"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/lon",
+          "name": "lon",
+          "description": "longitude",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "lon"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/lat",
+          "name": "lat",
+          "description": "latitude",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "lat"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/var1",
+          "name": "var1",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "var1"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/var3",
+          "name": "var3",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "var3"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/var4",
+          "name": "var4",
+          "dataType": "sc:Float",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "var4"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/month",
+          "name": "month",
+          "description": "month of acquisition",
+          "dataType": "sc:Date",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "month"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/year",
+          "name": "year",
+          "description": "year of acquisition",
+          "dataType": "sc:Date",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "year"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "google_download_records/filename",
+          "name": "filename",
+          "description": "filename of the image",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "paronamic_google"
+            },
+            "extract": {
+              "column": "filename"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "id_to_label_records",
+      "name": "id_to_label_records",
+      "description": "Mapping between id and labels",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "id_to_label_records/label",
+          "name": "label",
+          "description": "Unique label name",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "id_to_labels"
+            },
+            "extract": {
+              "column": "label"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "id_to_label_records/id",
+          "name": "id",
+          "description": "unique label id",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileSet": {
+              "@id": "id_to_labels"
+            },
+            "extract": {
+              "column": "id"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

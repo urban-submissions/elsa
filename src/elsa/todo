@@ -1,0 +1,462 @@
+# todo: make note of this, or point out this for the future;
+#   here we are calling self.inner(grid) to propagate self.trace
+#   and then grid(...) to propagate back the attributes;
+#   maybe implement something like self.carryover(...) to
+#   support when trace is different; or self.inherits(...)
+#   maybe from_options(__inherits__=True)
+#   also a magicpandas.tooltips option which will print out tooltips to help learn
+
+todo: very important: from params self.__inner__(...) is not setting trace! see Sirius.evaluate;
+    I have to do it manually
+
+if subframes attempt to generate a magic column
+
+sirius.evaluate(...)
+and grid.scored(...) currently manually setting trace--how do we correctly propagate?
+
+# cache cat.codes?
+
+can we inherit docstrings from inherited classes?
+
+@magic.delayed.property
+def truth(self) -> Truth:
+    ...
+
+
+pd.MultiIndex.reorder_levels['x', :, 'y']
+frame.columns.reorder_levels['x', :, 'y']
+
+magicpandas drydoc ./src
+drydoc sets return type and docstring
+
+magic.cached.property should also work as magic.cached_property
+
+
+let's say we have
+
+class FancyFrame:
+    """blah blah blah"""
+
+class Frame:
+    @FancyFrame
+    def fancy(self) -> FancyFrame:
+        """"""
+
+magic.deleter for dependent columns
+
+we want the doc for FancyFrame to autofill that one
+
+An inconvenience is that we have "isyns" defined in many places, but we don't want
+to have to keep documenting it. Can we develop a magicpandas module that defines the
+documentation once, and then maps that to
+
+with magic.quiet:
+    ...
+
+for delayed imports, can we use the annotation
+@magic.cached.backref.property
+
+@magic.delayed.property['Self']
+
+@magic.delayed.property['Frame']
+
+pandas.DataFrame.leftcolumns
+
+add feature to silence magicpandas logger, especially for tqdm
+
+@magic.outer
+def resource(self) -> Resource
+    ...
+
+DryDocs: DRY Documentation; define a doc somewhere and then script automatically writes to files
+
+maybe a warning when methods return magic that has a different root
+    # todo: this doesn't work either. let's just manually assign for now
+    #   and figure out later how to support inheritance of attributes
+     = self.__inner__(grid)
+    trace = self.__inner__(grid).__trace__
+    result.__trace__ = trace
+    result.using = grid.using
+    result.sirius = sirius
+
+result = grid.copy()
+trace = self.__inner__(grid).__trace__
+result.__trace__ = trace
+return result
+
+this fails because predict is magic.Magic rather than magic.Frame
+
+    # @Predict
+    # def predict(self) -> Predict:
+    #     """
+    #     A container for different prediction methods; from this you may
+    #     call `sirius.predict.gdino3p(...) to run inference.`
+    #     """
+
+# problem is we got this from Checkpoint.grid,
+#   we are trying to pass it through Sirius.evaluate,
+#   the traces conflict
+grid = c.grid
+grid.using = score
+
+        result = grid(self.__inner__(grid))
+eval
+
+    implement small alg. maryam sent (reference roboflow for NMS)
+coco validation
+
+
+NDFrame.propagate still needs clarifying
+
+we need
+
+magic columns should just raise an error if dataframe is a copy
+    don't even allow the user to be lazy
+    tell them to either 1. precompute or 2. create a copy
+
+# todo: result = self(Scored(self))
+#   this was awkard, Scored(self) should preserve metadata
+
+todo: add feature when columns are dependent on some other attribute, and if that attribute changes,
+    the columns should be dropped
+
+todo: check out why needs to be set back to vanilla pd.DataFrame when serializing magic frames
+  to avoid heavy consumption from a memory leak
+
+todo prompts generation
+
+todo: cloc, which allows you to loc on a column while maintaining the index in the result
+
+magicpandas.Frame.index_on()
+
+isyn should follow ilabel sort to be more legible
+
+an optoin to force recomputation of columns for each subset dataframe because the column is dependent on other rows
+inter-row dependency?
+
+synonyms
+
+todo: save case with the car and the individual prompt from slack
+
+sirius.matches()
+
+implement magicpandas view hiearchy which includes docstrings
+
+add flush_attrs to magicpandas frame for when the frame is copied in multiprocessing
+false positives in truth.fake
+
+todo:
+    grid.scored at 80068c5 caused grid.root during average_precision to be incorrectly set to Checkpoint
+    which was cleaned up by the garbage collector, making root=None nad causing a very unpredictable bug
+
+    we NEED to make sure the user called
+        result = self.__inner__(self) on the result when implementing from_params
+
+    # todo: what if self.inner is to be a copy of self, but as a new class?
+
+matching
+support viewing empty file
+AP (average precision), recall, and IOU
+
+# include "coco" overlap
+
+predictions table
+truth table
+combos table
+
+
+@magic.outer
+def sirius(self) -> Sirius:
+    ...
+
+get owl from repo as well
+
+generate inference from 50 prompts and 10 images
+
+https://github.com/longzw1997/Open-GroundingDino/blob/main/tools/inference_on_a_image.py
+https://github.com/IDEA-Research/GroundingDINO
+
+add confidence and label to annotation.view()
+
+  python tools/inference_on_a_image.py \
+    -c tools/GroundingDINO_SwinT_OGC.py \
+    -p /home/arstneio/Downloads/gdinot-1.8m-odvg.pth \
+    -i /home/arstneio/Downloads/Archive/bing/103332021020303110_x4_cropped.png \
+    -t "a person standing to cross a crosswalk" \
+    -o ~/tmp/gdino
+
+label   confidence
+person  .57
+sitting .57
+person  .45
+sitting .45
+person  .43
+sitting .43
+person  .42
+sitting .42
+
+label   confidence
+person  .55
+sitting <very low>
+person  .43
+sitting <very low>
+person  .41
+sitting <very low>
+person  .41
+
+"""
+prompt
+person sitting on a bench
+
+confidence:
+.55
+
+label   confidence
+person  .53
+bench   .03
+
+"""
+
+The question I asked yesterday was “can we do the same for other models too?”
+
+If they don’t have such design then we cannot evaluate them the same
+That’s why I asked if you can at first do some limited test (visualize the results, side by side with gt or overlay and we can see
+
+@magic.outer
+def prompts(self) -> Prompts:
+    ...
+
+look into jax for parallelism
+if columns have setters, when instantiated a dataframe should check for those and run
+bug with result.file in resources
+
+https://cocodataset.org/#format-data
+
+@MODULE_BUILD_FUNCS.registe_with_name(module_name="groundingdino")
+def build_groundingdino(args):
+    device = torch.device(args.device)
+    backbone = build_backbone(args)
+    transformer = build_transformer(args)
+
+    dn_labelbook_size = args.dn_labelbook_size
+    dec_pred_bbox_embed_share = args.dec_pred_bbox_embed_share
+    sub_sentence_present = args.sub_sentence_present
+
+    model = GroundingDINO(
+        backbone,
+        transformer,
+        num_queries=args.num_queries,
+        aux_loss=args.aux_loss,
+        iter_update=True,
+        query_dim=4,
+        num_feature_levels=args.num_feature_levels,
+        nheads=args.nheads,
+        dec_pred_bbox_embed_share=dec_pred_bbox_embed_share,
+        two_stage_type=args.two_stage_type,
+        two_stage_bbox_embed_share=args.two_stage_bbox_embed_share,
+        two_stage_class_embed_share=args.two_stage_class_embed_share,
+        num_patterns=args.num_patterns,
+        dn_number=0,
+        dn_box_noise_scale=args.dn_box_noise_scale,
+        dn_label_noise_ratio=args.dn_label_noise_ratio,
+        dn_labelbook_size=dn_labelbook_size,
+        text_encoder_type=args.text_encoder_type,
+        sub_sentence_present=sub_sentence_present,
+        max_text_len=args.max_text_len,
+    )
+
+
+probably better to avoid multiindices? if we have a unique index, better to only use that
+
+magicpandas/magic/second.py:63
+
+easy batch support
+
+9 prompts, 3 of each condition( group of people, ndividual and couple)
+# for each prompt, show which image generated the highest summed confidence
+
+we have "stroller" and "strolling"; when these prompts are tokenized, do they become
+"stroll, ing" and "stroll, er" respectively? how does this affect the eval?
+
+del sirius.truth.combos should also delete ibox, isyns, comboa
+
+@magic.column.from_options(dtype='category')
+def path(self) -> magic[str]:
+    """path to image"""
+todo: if column is defined like this, dataframe construction must assure dtype
+
+logits/
+    prompt/
+        synonym1.parquet
+        synonym2.parquet
+        synonym3.parquet
+
+# todo: include metadata in the parquet files
+isyns
+todo alg 1
+todo: group batches by image resolution
+
+unify logits
+
+sirius.truth.compare( *synonymous_prompts )
+
+for each truth box:
+    for each set of synonymous prompts:
+        select the best prediction box that maximizes overlap with the truth box
+        select all the predictions that achieve 90% intersect with the prediction box
+
+itruth  isyns    prompt  ilogit  w   s   e   n   intersect   score
+
+if magic frame is annotated to have a MultiIndex, init_subclass should create a repr
+each synonym gets a "root" column; the token must intersect with the string in the root
+
+
+1- the argmax ranking of boxes
+2- apply the LSE on the whole token set
+3- apply LSE to only the select tokens (removing and , an, the, …)
+
+4:17
+And do it for 5 prompts per images , one of which at least is in the gt
+
+'red orange yellow green blue purple pink brown black white'
+for each image:
+    for each prompt:
+        for each method:
+            plot top 10 in image
+
+methods are side by side
+
+But the only disjoint we need to check in here, is for having more than one state for an individual, or having more than 1 condition for a box, , what are the other most obvious ones here?
+
+9:56
+Also a couple with more than 2 states
+
+iunify  iprompt condition   alone   couple
+0       ...     True        False   True
+0       ...     False       False   True
+0       ...     True        False   True
+1       ...
+1       ...
+
+should we forget about the variance?
+if it is easy, lets add this to our pipeline
+
+
+1- lse score per box per prompt
+2- lse average over the box
+3- lse average on each level (for each image and for the whole dataset)
+4- FP (count and average score image and whole) TP (count and average score for each image, and across the dataset)
+AND iou and giou
+
+# what are the files implicated by a logit file?
+# what files are actually relevant and interesting to a logit output?
+
+
+todo :some sort of warning whean using cached_prporety for magic.Magic of 2nd
+i just need to put in some numbers, avg per prompts for first 5 most frequent prompts
+
+1- for each gt, find the box with highest overlap, and the get id all overlapping boxes with that box (>90%) , get box ids
+2- get the prompt associated with each overlapping box
+3- get the score of that prompt for the box
+4- sort by prompt score
+Then;
+NMS method : Compute the max score and assign that score and label to the box , compare with gt, assign FP, TP - and the score
+Our method:
+5- compute the range (Max-min.)
+6-if range> 20:
+Keep till where max-S<20
+Else:
+Keep all
+7- average the scores
+8- if disjointed prompts : miss , else: match gt  (edited)
+
+we need to also run  the eval on the argmax>0.3 to see if that gives better results
+make TP work for subsets
+
+i95, i90 for subgroupings of logits which intersect with other
+
+todo: evaluation.scored should be a from_params
+
+todo: keep ibest
+
+(nmatches, nunique)
+
+todo: how to get unique int for isyns
+
+where level == '' and Others is contained e.g. "with bike", level should be "o"
+
+seems like changing score to "scores.whole.argmax" is not applied
+
+is_false_negative
+
+        selected.argmax     selected.loglse
+c
+cs
+csa
+
+Let’s crates a test set of 10 images , 7 prompt groups so wr have uneven prompts in the cs csa csao
+
+                            map  ...                                            classes
+level score                      ...
+c     selected.argmax  0.666667  ...                       [905, 993, 1116, 2930, 4002]
+
+
+all numbers are the same.... here classes means combo labels?
+
+so for tonight, lets finish making the anchor optional and have the images
+for tomorrow, inspect why we get the exact same values for csa and csao
+
+was not like that in the lasr run i had for submision
+something seems to be off, either the caching or assignment
+
+also go back and generate heatmap
+
+todo how do we see which ones have changed due to the anchoring
+
+
+some prompts still contain "person sitting standing"
+
+# todo: PRIORITY:
+or tomorrow,
+ inspect why we get the exact same values for csa and csao
+Compute F1 based on the FP FN TP numbers
+compute AUC but we need to drop the boxes that did not pass our alg1 (do we do this for map?) i think we need to keep the files still, and have them there with no predictions so they are all FN, not sure how that is handled now.
+
+exclude disjoint prompts
+meaning add an is_disjoint column to prompts
+
+Create checks and reports, check the max class id in the truth file and compare, have some tests to check the label that we know the gt for, and assert if the combo gives us the same (rule of thumb : 3 in the beginning , 3 middle, 3 end )
+
+couple & kid
+    kid & pedestrian
+
+
+series.__getitem__ should always be iloc just to have consistency with ndarray
+
+column should nto log, frame should log
+
+
+
+
+cannot resolve constructor
+
+2- : Argmaxwhole>0.3->NMS-> mAP
+F1 , precision and Recall  (edited)
+
+Selected Loglse>0.3 ->alg1 -> metrics
+Selected loglse >0.3 > NMS > metrics
+
+Tomorrow, could you work on making sure the procedure in the thread is being streamlined?
+
+
+@magic.cached.lazy.property[Grid]
+def grid(self)
+    ...
+
+
+@Truth
+def truth(self):
+    """
+    A DataFrame encapsulating the ground truth annotations from the
+    dataset, containing the bounding boxes and their assigned labels.
+    """

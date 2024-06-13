@@ -1,0 +1,52 @@
+Alone
+At petrol/gas station
+Biking
+Construction workers
+Couple/2people
+Dining
+GSV car interaction
+Group
+Load/unload packages from car/truck
+On Wheelchair
+Pet interactions
+Phone interaction
+Picnic
+Playing
+Police
+Pushing Stroller or shopping cart
+Pushing Wheelchair
+Reading
+Running
+Shopping
+Sitting
+Snacking
+Sport activities
+Standing
+Street vendors
+Taking cab/Taxi
+Taking photo
+Talking
+Talking on phone
+Waiting for food/drinks
+Waiting in Bus Station
+Walking
+With bike
+With coffee or drinks
+With luggage
+baby/infant
+crossing crosswalk
+duplicate
+elderly
+kid
+mobility aids
+model_hint
+multi-label
+no people
+not sure/confusing
+pet
+public service/cleaning
+riding carriage
+teenager
+working/laptop
+No interaction
+Pushing Wheelchair or stroller

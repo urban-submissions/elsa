@@ -1,0 +1,36 @@
+label,id
+alone,0
+group,1
+couple/2people,2
+sitting,3
+standing,4
+walking,5
+running,6
+biking,7
+mobility aids,8
+riding carriage,9
+waiting in bus station,10
+talking,11
+load/unload packages from car/truck,12
+taking photo,13
+pushing stroller or shopping cart,14
+sport activities,15
+shopping,16
+pushing shopping cart,17
+crossing crosswalk,18
+pet interactions,19
+talking on phone,20
+phone interaction,21
+dining,22
+construction workers,23
+public service/cleaning,24
+street vendors,25
+with luggage,26
+with coffee or drinks,27
+with bike,28
+pet,29
+kid,30
+teenager,31
+elderly,32
+baby/infant,33
+on wheelchair,34
