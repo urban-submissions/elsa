@@ -1,4 +1,4 @@
-# ELSA: evaluating localization of social activities
+# ELSA: evaluating localization of social activities ❄️
 
 ## Dataset
 
