@@ -1,21 +1,3 @@
-# from streetview import get_streetview
-# from streetview import get_panorama
-#
-# # GOOGLE_MAPS_API_KEY = "AIzaSyAhpX4EgjgUxRvmZfdycZGZ-f3-oM8fJgo"
-# panoid = "z80QZ1_QgCbYwj7RrmlS0Q"
-#
-#
-# print(f"download {panoid}")
-#
-# image = get_panorama(pano_id=panoid)
-#
-# # image = get_streetview(
-# #     pano_id=panoid,
-# #     api_key=GOOGLE_MAPS_API_KEY,
-# # )
-#
-# image.save("image.jpg", "jpeg")
-
 ##########
 # BING
 
